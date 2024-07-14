@@ -15,21 +15,30 @@
 
 <body>
     <header>
-        <div class="d-flex justify-content-between align-items-center h-100 mx-2">
-            <h1 class="main-color">Memory Game</h1>
+        <div class="d-flex justify-content-between align-items-center h-100 mx-2 p-2">
             <div>
-                <select id="difficulty">
-                    <option value="">Seleziona il livello di difficoltà</option>
+                <h1 class="main-color">Memory Game</h1>
+            </div>
+            <div>
+                <select id="difficulty" class="m-1">
+                    <option value="">Difficoltà</option>
                     <option value="1">Facile</option>
                     <option value="2">Difficile</option>
                 </select>
-                <button id="start">Inizia partita</button>
+                <button id="start" class="m-1">Inizia partita</button>
             </div>
         </div>
     </header>
     <main class="mt-4">
         <div class="container">
             <div class="row">
+                <div class="col-12">
+                    <div id="time" class="d-none">
+                        <div id="minutes" class="d-inline-block">00</div>
+                        :
+                        <div id="seconds" class="d-inline-block">00</div>
+                    </div>
+                </div>
                 <div class="col-12">
                     <div id="grid" class="d-flex flex-wrap"></div>
                 </div>

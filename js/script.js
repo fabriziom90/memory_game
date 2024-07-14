@@ -139,13 +139,53 @@ const films = [
 
 ];
 
+// funzione che fa partire il timer
+function startTimer() {
+    // variabili per minuti secondi ed ore
+    let seconds = 0;
+    let minutes = 0;
+
+    // recupero gli elementi del dom che devono contenere queste informazioni
+    let m = document.getElementById('minutes');
+    let s = document.getElementById('seconds');
+
+    let timer = setInterval(function () {
+        seconds++;
+
+        if (seconds < 9) {
+            s.innerHTML = `0${seconds}`;
+        }
+        else {
+            s.innerHTML = `${seconds}`
+        }
+
+        if (seconds > 59) {
+            minutes++;
+            m.innerHTML = `0${seconds}`;
+            seconds = 0;
+            s.innerHTML = `00`;
+
+            if (minutes > 9) {
+                m.innerHTML = `0${minutes}`;
+            }
+            else {
+                m.innerHTML = `${minutes}`;
+            }
+        }
+
+    }, 1000)
+
+    return timer;
+}
+
+// funzione che crea la grafica delle carte di gioco
 function createGraphicCard(film, num) {
     const card = document.createElement('div');
+
+    let { name, img } = film;
+
     card.classList.add('game-card');
-
     card.style.width = `calc(100% / ${num} - 20px)`;
-
-
 
     if (num === 4) {
         card.style.height = '400px'
@@ -155,15 +195,22 @@ function createGraphicCard(film, num) {
     }
 
     card.style.margin = '10px';
-    card.dataset.name = film.name;
+    card.dataset.name = name;
     card.innerHTML += `<img src="./img/card-back-black.png" class="card-face-back">`;
-    card.innerHTML += `<img src="./img/${film.img}" class="card-face-front">`;
+    card.innerHTML += `<img src="./img/${img}" class="card-face-front">`;
 
     return card;
 }
 
 //FUNZIONE CHE CREA LA NUOVA PARTITA: DETERMINA IL LIVELLO DI DIFFICOLTA' (OVVERO IL NUMERO DI CARTE SUL TAVOLO), GENERA L'ARRAY DELLE CARTE SUL TAVOLO E LE CREA VISIVAMENTE
 function createNewGame(films) {
+    // rimuovo la classe d-none dal timer per visualizzarlo
+    document.getElementById('time').classList.remove('d-none');
+
+    // ogni volta che premo il pulsante per avviare una nuova partita, imposto i minuti ed i secondi a 0
+    document.getElementById('minutes').innerHTML = '00';
+    document.getElementById('seconds').innerHTML = '00';
+
     //RECUPERO LA GRIGLIA DAL DOM
     const grid = document.getElementById('grid');
     //RECUPERO IL VALORE SELEZIONATO CON LA SELECT
@@ -212,6 +259,9 @@ function createCards(arrayCards, total_cards) {
     let flipped = []; //ARRAY CHE CONTIENE LE CARTE GIRATE PER CONTROLLARE SE SONO UGUALI
     let guessed = []; //ARRAY CHE CONTIENE LE CARTE INDOVINATE
 
+    // faccio partire il timer attraverso la funzione startTimer e lo restituisco in una variabile
+    let timer = startTimer();
+
     //RECUPERO LA GRIGLA
     const grid = document.getElementById('grid');
 
@@ -247,6 +297,10 @@ function createCards(arrayCards, total_cards) {
                     if (guessed.length === arrayCards.length / 2) {
                         setTimeout(() => {
                             alert('Hai vinto!');
+                            clearInterval(timer);
+
+                            document.getElementById('start').classList.remove('disabled');
+                            document.getElementById('start').removeAttribute('disabled');
                         }, 2000);
                     }
 
@@ -266,14 +320,6 @@ function createCards(arrayCards, total_cards) {
 
 
         grid.appendChild(card);
-
-        //
-        document.querySelectorAll('.game-card').forEach((card) => {
-            let width = card.offsetWidth;
-
-            height = (width * 1.7);
-            card.style.height = height + 'px'
-        });
     });
 
 }
@@ -282,5 +328,8 @@ function createCards(arrayCards, total_cards) {
 const button = document.getElementById('start');
 button.addEventListener('click', function () {
     createNewGame(films);
-});
 
+    this.classList.add('disabled');
+    this.setAttribute('disabled', true);
+
+});
