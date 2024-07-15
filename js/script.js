@@ -195,6 +195,7 @@ function createGraphicCard(film, num) {
     }
 
     card.style.margin = '10px';
+    // funzione che mi definisce il data attribute name da assegnare al div card
     card.dataset.name = name;
     card.innerHTML += `<img src="./img/card-back-black.png" class="card-face-back">`;
     card.innerHTML += `<img src="./img/${img}" class="card-face-front">`;
