@@ -1,144 +1,3 @@
-//ARRAY DI FILM
-const films = [
-    {
-        'name': 'Il grande Lebowsky',
-        'img': 'il-grande-lebowsky.jpg'
-    },
-    {
-        'name': 'Il signore degli anelli: il ritorno del re',
-        'img': 'il-ritorno-del-re.jpg'
-    },
-    {
-        'name': 'Star wars: l\'impero colpisce ancora',
-        'img': 'impero-colpisce-ancora.jpg'
-    },
-    {
-        'name': 'Inception',
-        'img': 'inception.jpg'
-    },
-    {
-        'name': 'Il signore degli anelli: la compagnia dell\'anello',
-        'img': 'la-compagnia-dellanello.jpg'
-    },
-    {
-        'name': 'Il signore degli anelli: le due torri',
-        'img': 'le-due-torri.jpg'
-    },
-    {
-        'name': 'Shutter Island',
-        'img': 'shutter-island.jpg'
-    },
-    {
-        'name': 'The departed',
-        'img': 'the-departed.jpg'
-    },
-    {
-        'name': 'V per Vendetta',
-        'img': 'v-per-vendetta.jpg'
-    },
-    {
-        'name': 'Star wars: la vendetta dei sith',
-        'img': 'la-vendetta-dei-sith.jpg'
-    },
-    {
-        'name': 'Il mistero di Sleepy Hollow',
-        'img': 'il-mistero-di-sleepy-hollow.jpg'
-    },
-    {
-        'name': 'Non è un paese per vecchi',
-        'img': 'non-e-un-paese-per-vecchi.jpg'
-    },
-    {
-        'name': 'The hateful eight',
-        'img': 'the-hateful-eight.jpg'
-    },
-    {
-        'name': 'Pulp fiction',
-        'img': 'pulp-fiction.jpg'
-    },
-    {
-        'name': 'Matrix',
-        'img': 'matrix.jpg'
-    },
-    {
-        'name': 'Il caso spotlight',
-        'img': 'il-caso-spotlight.jpg'
-    },
-    {
-        'name': 'The founder',
-        'img': 'the-founder.jpg'
-    },
-    {
-        'name': 'Django: unchained',
-        'img': 'django-unchained.jpg'
-    },
-    {
-        'name': 'The wolf of wall street',
-        'img': 'the-wolf-of-wall-street.jpg'
-    },
-    {
-        'name': 'Constantine',
-        'img': 'constantine.jpg'
-    },
-    {
-        'name': 'Interstellar',
-        'img': 'interstellar.jpg'
-    },
-    {
-        'name': 'Full metal jacket',
-        'img': 'full-metal-jacket.jpg'
-    },
-    {
-        'name': 'Arancia meccanica',
-        'img': 'arancia-meccanica.jpg'
-    },
-    {
-        'name': 'Eyes wide shut',
-        'img': 'eyes-wide-shut.jpg'
-    },
-    {
-        'name': 'John Wick',
-        'img': 'john-wick.jpg'
-    },
-    {
-        'name': 'Matrix: Reloaded',
-        'img': 'matrix-reloaded.jpg'
-    },
-    {
-        'name': 'Matrix: Revolutions',
-        'img': 'matrix-revolutions.jpg'
-    },
-    {
-        'name': 'Il grande gatsby',
-        'img': 'il-grande-gatsby.jpg'
-    },
-    {
-        'name': 'La maledizione della prima luna',
-        'img': 'la-maledizione-della-prima-luna.jpg'
-    },
-    {
-        'name': 'Scarface',
-        'img': 'scarface.jpg'
-    },
-    {
-        'name': 'Mad Max: Fury road',
-        'img': 'mad-max.jpg'
-    },
-    {
-        'name': 'Ready Player One',
-        'img': 'ready-player-one.jpg'
-    },
-    {
-        'name': 'Jurassic Park',
-        'img': 'jurassic-park.jpg'
-    },
-    {
-        'name': 'Alien',
-        'img': 'alien.jpg'
-    },
-
-];
-
 // funzione che fa partire il timer
 function startTimer() {
     // variabili per minuti secondi ed ore
@@ -328,9 +187,15 @@ function createCards(arrayCards, total_cards) {
 //RECUPERO IL PULSANTE DI INIZIO PARTITA
 const button = document.getElementById('start');
 button.addEventListener('click', function () {
-    createNewGame(films);
+    let films;
+    axios.get('https://gist.githubusercontent.com/fabriziom90/c7772608f797e0f1a7cd171288798be1/raw/fd3e992a30908db6fbf6830ce2131b97e0e67fff/films.json').then((resp) => {
+        films = resp.data;
+        
+        createNewGame(films);
+    
+        this.classList.add('disabled');
+        this.setAttribute('disabled', true);
+    })
 
-    this.classList.add('disabled');
-    this.setAttribute('disabled', true);
 
 });
